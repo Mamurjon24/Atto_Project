@@ -1,6 +1,4 @@
 package org.example.container;
-
-
 import org.example.dto.Profile;
 import org.example.repository.CardRepository;
 import org.example.repository.ProfileRepository;
@@ -10,8 +8,6 @@ import org.example.service.*;
 
 public class ComponentContainer {
     public static Profile currentProfile = null;
-
-
     public static CardRepository cardRepository = new CardRepository();
     public static ProfileRepository profileRepository = new ProfileRepository();
     public static TerminalRepository terminalRepository = new TerminalRepository();

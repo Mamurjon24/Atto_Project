@@ -9,22 +9,22 @@ import org.example.repository.ProfileRepository;
 import org.example.util.MD5Util;
 import java.time.LocalDateTime;
 public class AuthService {
+    private ProfileRepository profileRepository;
+    public void setProfileRepository(ProfileRepository profileRepository) {
+        this.profileRepository = profileRepository;
+    }
     public AuthService() {
     }
     public void login(String phone, String password) {
-        ProfileRepository profileRepository = ComponentContainer.profileRepository;
         Profile profile = profileRepository.getProfileByPhoneAndPassword(phone, MD5Util.encode(password));
-
         if (profile == null) {
             System.out.println("Phone or Password incorrect");
             return;
         }
-
         if (!profile.getStatus().equals(GeneralStatus.ACTIVE)) {
             System.out.println("You not allowed.MF");
             return;
         }
-
         ComponentContainer.currentProfile = profile;
         if (profile.getRole().equals(ProfileRole.ADMIN)) {
             AdminController adminController = new AdminController();
@@ -36,16 +36,13 @@ public class AuthService {
             System.out.println("You don't have any role.");
         }
     }
-
     public void registration(Profile profile) {
-        ProfileRepository profileRepository = ComponentContainer.profileRepository;
         // check
         Boolean exist = profileRepository.isPhoneExist(profile.getPhone()); // unique
         if (exist) {
             System.out.println(" Phone already exist.");
             return;
         }
-
         profile.setStatus(GeneralStatus.ACTIVE);
         profile.setCreatedDate(LocalDateTime.now());
         profile.setRole(ProfileRole.USER);
@@ -55,6 +52,5 @@ public class AuthService {
         if (result != 0) {
             System.out.println("Profile created.");
         }
-
     }
 }

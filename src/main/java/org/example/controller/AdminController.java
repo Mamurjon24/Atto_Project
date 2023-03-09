@@ -11,9 +11,19 @@ import java.util.List;
 import java.util.Scanner;
 
 public class AdminController {
-    private CardService cardService = new CardService();
-    private ProfileService profileService = new ProfileService();
-    private TerminalService terminalService = new TerminalService();
+    private CardService cardService;
+    public void setCardService(CardService cardService) {
+        this.cardService = cardService;
+    }
+    private ProfileService profileService;
+    public void setProfileService(ProfileService profileService) {
+        this.profileService = profileService;
+    }
+    private TerminalService terminalService;
+    public void setTerminalService(TerminalService terminalService) {
+        this.terminalService = terminalService;
+    }
+
     Scanner strscanner = new Scanner(System.in);
     Scanner intScanner = new Scanner(System.in);
 
@@ -121,7 +131,6 @@ public class AdminController {
         System.out.println("19. Transaction by Terminal");
         System.out.println("20. Transaction By Card");
 
-
         System.out.println("0. Log out");
     }
 
@@ -140,7 +149,6 @@ public class AdminController {
 
         cardService.adminCreateCard(cardNumber, expiredDate);
     }
-
     private void cardList() {
         cardService.cardList();
     }
@@ -152,7 +160,6 @@ public class AdminController {
 
         cardService.adminDeleteCard(cardNumber);
     }
-
     private void changeCardStatus() {
         System.out.print("Enter card number: ");
         Scanner scanner = new Scanner(System.in);
@@ -160,7 +167,6 @@ public class AdminController {
 
         cardService.adminChangeStatus(cardNumber);
     }
-
     private void updateCard() {
         System.out.print("Enter card number: ");
         Scanner scanner = new Scanner(System.in);
@@ -210,14 +216,12 @@ public class AdminController {
 
         terminalService.updateTerminal(terminal);
     }
-
     private void changeTerminalStatus() {
         System.out.print("Enter code: ");
         Scanner scanner = new Scanner(System.in);
         String code = scanner.nextLine();
         terminalService.changeTerminalStatus(code);
     }
-
     private void deleteTerminal() {
         System.out.print("Enter code: ");
         Scanner scanner = new Scanner(System.in);
@@ -290,7 +294,6 @@ public class AdminController {
         List<Transaction> TransactionListByTerminal = TransactionService.getTranzactionTransactionListByTerminal(termianlcode);
         TransactionListByTerminal.forEach(System.out::println);
     }
-
     private void transactionByCard() {
         System.out.print("Enter Card id:");
         Integer cardNum = intScanner.nextInt();
@@ -298,6 +301,4 @@ public class AdminController {
         TransactionListByCard.forEach(System.out::println);
 
     }
-
-
 }

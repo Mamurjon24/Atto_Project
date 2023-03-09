@@ -9,7 +9,10 @@ import org.example.util.ScannerUtil;
 import java.util.Scanner;
 
 public class ProfileController {
-    private CardService cardService = new CardService();
+    private CardService cardService;
+    public void setCardService(CardService cardService) {
+        this.cardService = cardService;
+    }
 
     public void start() {
         boolean b = true;
@@ -48,8 +51,6 @@ public class ProfileController {
             }
         }
     }
-
-
     public void menu() {
         System.out.println("1. Add Card");
         System.out.println("2. Card List ");
@@ -73,13 +74,11 @@ public class ProfileController {
         Profile profile = ComponentContainer.currentProfile;
         cardService.addCardToProfile(profile.getPhone(), cardNumber);
     }
-
     private void cardList( ) {
         System.out.println("--- Card List ---");
         Profile profile = ComponentContainer.currentProfile;
         cardService.profileCardList(profile.getPhone());
     }
-
     private void changeCardStatus( ) {
         System.out.print("Enter card number: ");
 
@@ -88,16 +87,13 @@ public class ProfileController {
         Profile profile = ComponentContainer.currentProfile;
         cardService.userChangeCardStatus(profile.getPhone(), cardNumber);
     }
-
     private void deleteCard( ) {
         System.out.print("Enter card number: ");
         Scanner scanner = new Scanner(System.in);
         String cardNumber = scanner.nextLine();
 
         Profile profile = ComponentContainer.currentProfile;
-
     }
-
     private void refill( ) {
         System.out.print("Enter card number: ");
         Scanner scanner = new Scanner(System.in);
@@ -109,22 +105,19 @@ public class ProfileController {
         cardService.userRefillCard(profile.getPhone(), cardNumber, amount);
     }
 
-
     /**
      * Transaction
      */
+
     private void transactionList() {
         System.out.println("--- Transaction List ---");
         Profile profile = ComponentContainer.currentProfile;
         Card card1 = ComponentContainer.cardRepository.getCardByProfilePhoneOne(profile.getPhone());
         TransactionService.getAllProfileTransaction(card1.getId());
-
     }
-
     private void payment() {
         Profile profile = ComponentContainer.currentProfile;
         cardService.userPayCard(profile.getPhone());
-
     }
 
 
